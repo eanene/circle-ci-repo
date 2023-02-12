@@ -33,7 +33,7 @@ jobs:
           root: ~/circle-ci-repo
           paths: environment/vpc/vpc.tfplan
       
-  apply:
+  vpc_apply:
     docker:
       - image: hashicorp/terraform
     working_directory: ~/circle-ci-repo
@@ -46,6 +46,20 @@ jobs:
           command: |
             cd environment/$MODULE
             terraform init && terraform apply -auto-approve
+            
+  subnet_apply:
+      docker:
+        - image: hashicorp/terraform
+      working_directory: ~/circle-ci-repo
+      steps:
+        - checkout
+  #       - attach_workspace:
+  #            at: ~/tf-class-repo
+#         - run: 
+#             name: terraform apply
+#             command: |
+#               cd environment/$MODULE
+#               terraform init && terraform apply -auto-approve
 
 # Orchestrate our job run sequence
 workflows:
@@ -56,6 +70,9 @@ workflows:
           type: approval
           requires:
             - initialize
-      - apply:
+      - vpc_apply:
+          requires:
+            - hold
+      - subney_apply
           requires:
             - hold
