@@ -19,10 +19,10 @@ jobs:
             echo $MODULE
             cd environment/$MODULE
             terraform init -reconfigure -backend-config=backend/$ENV.conf
-            terraform plan -var env=$ENV -out=$MODULE.tfplan
+            terraform plan -var env=$ENV -out=~/circle-ci-repo/$MODULE.tfplan
             pwd && ls -al
       - persist_to_workspace:
-          root: ~/circle-ci-repo/environment/$MODULE
+          root: ~/circle-ci-repo
           paths: $MODULE.tfplan
       
   apply:
