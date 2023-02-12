@@ -79,4 +79,4 @@ workflows:
             - hold
       - subnet_apply:
           requires:
-            - hold
+            - hold2
