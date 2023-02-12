@@ -13,6 +13,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
+variable "env" {
+  type = string 
+}
+
 module "vpc" {
   source = "../../module/vpc"
   env = var.env
