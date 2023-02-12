@@ -66,17 +66,17 @@ workflows:
   init_and_plan:
     jobs:
       - initialize
-      - hold:
+      - approve_vpc_plan:
           type: approval
           requires:
             - initialize
-      - hold2:
+      - approve_subnet_plan:
           type: approval
           requires:
             - initialize
       - vpc_apply:
           requires:
-            - hold
+            - approve_vpc_plan
       - subnet_apply:
           requires:
-            - hold2
+            - approve_subnet_plan
