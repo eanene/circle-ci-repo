@@ -73,6 +73,6 @@ workflows:
       - vpc_apply:
           requires:
             - hold
-      - subney_apply:
+      - subnet_apply:
           requires:
             - hold
