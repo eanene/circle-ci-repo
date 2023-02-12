@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "../../../module/vpc"
+  source = "../../module/vpc"
   env = var.env
   cidr = "10.0.0.0/16"
 }
