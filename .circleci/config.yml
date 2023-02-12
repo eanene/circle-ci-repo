@@ -14,6 +14,9 @@ jobs:
       - run: 
           name: terraform init and plan
           command: |
+            export TF_VAR_env=$ENV
+            echo $ENV
+            echo $MODULE
             cd environment/$MODULE
             terraform init -reconfigure -backend-config=backend/$ENV.conf
             terraform plan -var env=$ENV -out=$MODULE.tfplan
