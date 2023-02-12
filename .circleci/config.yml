@@ -6,9 +6,10 @@ orbs:
 # Define the jobs we want to run for this project
 parameters:
       modules:
-        type: enum
+#         type: enum
+        type: string
         default: "vpc" 
-        enum: ["vpc", "subnet", "s3" ]
+#         enum: ["vpc", "subnet", "s3" ]
 jobs:
   initialize: 
     docker:
