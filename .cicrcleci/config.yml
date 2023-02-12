@@ -24,7 +24,7 @@ jobs:
   apply:
     docker:
       - image: hashicorp/terraform
-    working_directory: ~/tf-class-repo
+    working_directory: ~/circle-ci-repo
     steps:
       - checkout
 #       - attach_workspace:
