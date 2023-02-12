@@ -26,7 +26,7 @@ jobs:
             terraform init -reconfigure -backend-config=backend/$ENV.conf
             terraform plan -var env=$ENV -out=$MODULE.tfplan
             pwd && ls -al
-       - store_artifacts:
+      - store_artifacts:
             path: ~/circle-ci-repo/environment/$MODULE/$MODULE.tfplan
             destination: artifact-file
 #       - persist_to_workspace:
