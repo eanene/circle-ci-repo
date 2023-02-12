@@ -22,8 +22,8 @@ jobs:
             terraform plan -var env=$ENV -out=$MODULE.tfplan
             pwd && ls -al
       - persist_to_workspace:
-          root: ~/circle-ci-repo
-          paths: environment/$MODULE/$MODULE.tfplan
+          root: ~/circle-ci-repo/environment
+          paths: $MODULE/$MODULE.tfplan
       
   apply:
     docker:
