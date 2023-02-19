@@ -17,7 +17,6 @@ jobs:
   initialize: 
     docker:
       - image: hashicorp/terraform
-#       - image: amazon/aws-cli
     working_directory: ~/circle-ci-repo
     steps:
       - when:
@@ -63,17 +62,21 @@ jobs:
         - image: hashicorp/terraform
       working_directory: ~/circle-ci-repo
       steps:
-        - checkout
-#         - when:
-#             condition:
-#               equal: [ subnet, << parameters.modules >> ]
-  #       - attach_workspace:
-  #            at: ~/tf-class-repo
-#         - run: 
-#             name: terraform apply
-#             command: |
-#               cd environment/$MODULE
-#               terraform init && terraform apply -auto-approve
+        - when:
+          condition:
+            equal: [ subnet, << pipeline.parameters.modules >> ]
+           steps:
+              - checkout
+    #         - when:
+    #             condition:
+    #               equal: [ subnet, << parameters.modules >> ]
+      #       - attach_workspace:
+      #            at: ~/tf-class-repo
+    #         - run: 
+    #             name: terraform apply
+    #             command: |
+    #               cd environment/$MODULE
+    #               terraform init && terraform apply -auto-approve
 
 # Orchestrate our job run sequence
 workflows:
@@ -85,6 +88,9 @@ workflows:
           requires:
             - initialize
       - approve_subnet_plan:
+          when:
+            condition:
+              equal: [ subnet, << pipeline.parameters.modules >> ]
           type: approval
           requires:
             - initialize
