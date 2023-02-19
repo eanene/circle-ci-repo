@@ -67,6 +67,7 @@ jobs:
             equal: [ subnet, << pipeline.parameters.modules >> ]
           steps:
              - checkout
+             - run: echo "example!!"
     #         - when:
     #             condition:
     #               equal: [ subnet, << parameters.modules >> ]
