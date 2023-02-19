@@ -73,6 +73,10 @@ jobs:
         - image: hashicorp/terraform
       working_directory: ~/circle-ci-repo 
       steps:
+        - <<: *vpc
+        - <<: *subnet
+        - <<: *s3
+        
       
 
 
@@ -127,10 +131,6 @@ workflows:
           requires:
             - initialize
       - deploy_all:
-          steps:
-            - <<: *vpc
-            - <<: *subnet
-            - <<: *s3
           requires:
             - vpc_apply
             - subnet_apply
