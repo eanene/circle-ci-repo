@@ -37,7 +37,7 @@ jobs:
           root: ~/circle-ci-repo
           paths: environment/<< pipeline.parameters.modules >>/<< pipeline.parameters.modules >>.tfplan
 
-  vpc_apply:
+  vpc_apply: &vpc
     docker:
       - image: hashicorp/terraform
     working_directory: ~/circle-ci-repo
@@ -53,7 +53,7 @@ jobs:
             terraform init -reconfigure -backend-config=backend/<< pipeline.parameters.env >>.conf
             terraform init && terraform apply -auto-approve
             
-  subnet_apply:
+  subnet_apply: &subnet
       docker:
         - image: hashicorp/terraform
       working_directory: ~/circle-ci-repo 
@@ -61,13 +61,20 @@ jobs:
          - checkout
          - run: echo "subnet example!!"
   
-  s3_apply:
+  s3_apply: &s3
       docker:
         - image: hashicorp/terraform
       working_directory: ~/circle-ci-repo 
       steps:
          - checkout
          - run: echo "s3 example!!"
+  deploy_all:
+      docker:
+        - image: hashicorp/terraform
+      working_directory: ~/circle-ci-repo 
+      steps:
+      
+
 
 # Orchestrate our job run sequence
 workflows:
@@ -119,7 +126,11 @@ workflows:
       - s3_apply:
           requires:
             - initialize
-      - deploy:
+      - deploy_all:
+          steps:
+            - <<: *vpc
+            - <<: *subnet
+            - <<: *s3
           requires:
             - vpc_apply
             - subnet_apply
