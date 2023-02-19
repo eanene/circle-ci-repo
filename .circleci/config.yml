@@ -17,9 +17,9 @@ jobs:
     working_directory: ~/circle-ci-repo
     steps:      
       - checkout
-      - when:
-          condition:
-            equal: [ vpc, << parameters.modules >> ]
+#       - when:
+#           condition:
+#             equal: [ vpc, << parameters.modules >> ]
       - run: 
           name: terraform init and plan
           command: |
@@ -59,9 +59,9 @@ jobs:
       working_directory: ~/circle-ci-repo
       steps:
         - checkout
-        - when:
-            condition:
-              equal: [ subnet, << parameters.modules >> ]
+#         - when:
+#             condition:
+#               equal: [ subnet, << parameters.modules >> ]
   #       - attach_workspace:
   #            at: ~/tf-class-repo
 #         - run: 
