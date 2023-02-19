@@ -76,7 +76,8 @@ workflows:
   vpc_workflow:
     when:
        condition:
-          equal: [ vpc, << pipeline.parameters.modules >> ]
+          and:
+            - equal: [ vpc, << pipeline.parameters.modules >> ]
     jobs:
       - initialize
       - approve_vpc_plan:
@@ -90,7 +91,8 @@ workflows:
   subnet_workflow:
     when:
        condition:
-          equal: [ subnet, << pipeline.parameters.modules >> ]
+          and:
+            - equal: [ subnet, << pipeline.parameters.modules >> ]
     jobs:
       - initialize
       - approve_subnet_plan:
@@ -103,4 +105,5 @@ workflows:
             
             
             
-   
+            
+    
