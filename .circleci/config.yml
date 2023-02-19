@@ -77,23 +77,44 @@ jobs:
 
 # Orchestrate our job run sequence
 workflows:
-  init_and_plan:
+  vpc_workflow:
+    when:
+       condition:
+          equal: [ vpc, << pipeline.parameters.modules >> ]
     jobs:
       - initialize
       - approve_vpc_plan:
           type: approval
           requires:
             - initialize
-      - approve_subnet_plan:
-          when:
-            condition:
-              equal: [ subnet, << pipeline.parameters.modules >> ]
-          type: approval
-          requires:
-            - initialize
       - vpc_apply:
           requires:
             - approve_vpc_plan
+            
+ subnet_workflow:
+    when:
+       condition:
+          equal: [ subnet, << pipeline.parameters.modules >> ]
+    jobs:
+      - initialize
+      - approve_subnet_plan:
+          type: approval
+          requires:
+            - initialize
       - subnet_apply:
           requires:
             - approve_subnet_plan
+            
+            
+            
+            
+            
+            
+            
+#             - approve_subnet_plan:
+#           when:
+#             condition:
+#               equal: [ subnet, << pipeline.parameters.modules >> ]
+#           type: approval
+#           requires:
+#             - initialize
