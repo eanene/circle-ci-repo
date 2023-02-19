@@ -1,18 +1,17 @@
 
-
 version: 2.1
 orbs:
   terraform: "circleci/terraform@3.2.0"
 # Define the jobs we want to run for this project
 parameters:
-      modules:
+  modules:
 #         type: enum
-          type: string
-          default: "vpc" 
+    type: string
+    default: "vpc" 
 #         enum: ["vpc", "subnet", "s3" ]
-      env:
-          type: string
-          default: "dev"
+  env:
+      type: string
+      default: "dev"
 jobs:
   initialize: 
     docker:
@@ -91,7 +90,7 @@ workflows:
           requires:
             - approve_vpc_plan
             
- subnet_workflow:
+  subnet_workflow:
     when:
        condition:
           equal: [ subnet, << pipeline.parameters.modules >> ]
@@ -107,14 +106,4 @@ workflows:
             
             
             
-            
-            
-            
-            
-#             - approve_subnet_plan:
-#           when:
-#             condition:
-#               equal: [ subnet, << pipeline.parameters.modules >> ]
-#           type: approval
-#           requires:
-#             - initialize
+  
