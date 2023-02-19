@@ -10,6 +10,9 @@ parameters:
           type: string
           default: "vpc" 
 #         enum: ["vpc", "subnet", "s3" ]
+      env:
+          type: string
+          default: "dev"
 jobs:
   initialize: 
     docker:
@@ -25,11 +28,11 @@ jobs:
             - run: 
                 name: terraform init and plan
                 command: |
-                  export TF_VAR_env=$ENV
-                  echo $ENV
-                  echo $MODULE
+                  export TF_VAR_env=<< pipeline.parameters.dev >>
+                  echo << pipeline.parameters.dev >>
+                  echo << pipeline.parameters.modules >>
                   cd environment/<< pipeline.parameters.modules >>
-                  terraform init -reconfigure -backend-config=backend/$ENV.conf
+                  terraform init -reconfigure -backend-config=backend/<< pipeline.parameters.env >>.conf
                   terraform plan -var env=$ENV -out=<< pipeline.parameters.modules >>.tfplan
                   pwd && ls -al
     #       - store_artifacts:
