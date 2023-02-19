@@ -133,11 +133,18 @@ workflows:
       - s3_apply:
           requires:
             - initialize
-      - deploy_all:
+      - approve_all:  # when you figure out how to run only all modules, remove this step and use requires below
+          type: approval
           requires:
             - vpc_apply
             - subnet_apply
             - s3_apply
+      - deploy_all:
+          requires:
+            # - vpc_apply
+            # - subnet_apply
+            # - s3_apply
+            - approve_all
 
             
             
