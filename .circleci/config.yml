@@ -14,6 +14,7 @@ jobs:
   initialize: 
     docker:
       - image: hashicorp/terraform
+      - image: amazon/aws-cli
     working_directory: ~/circle-ci-repo
     steps:
       - when:
