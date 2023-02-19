@@ -7,8 +7,8 @@ orbs:
 parameters:
       modules:
 #         type: enum
-        type: string
-        default: "vpc" 
+          type: string
+          default: "vpc" 
 #         enum: ["vpc", "subnet", "s3" ]
 jobs:
   initialize: 
