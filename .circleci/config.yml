@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run: 
           name: terraform init and plan
-          command: |
+          command: |           
             export TF_VAR_env=<< pipeline.parameters.env >>
             echo << pipeline.parameters.env >>
             echo << pipeline.parameters.modules >>
@@ -49,8 +49,8 @@ jobs:
           name: terraform apply
           command: |
             export TF_VAR_env=$ENV
-            cd environment/$MODULE
-            terraform init -reconfigure -backend-config=backend/$ENV.conf
+            cd environment/<< pipeline.parameters.modules >>
+            terraform init -reconfigure -backend-config=backend/<< pipeline.parameters.env >>.conf
             terraform init && terraform apply -auto-approve
             
   subnet_apply:
@@ -93,6 +93,8 @@ workflows:
        condition:
           and:
             - equal: [ subnet, << pipeline.parameters.modules >> ]
+          or:
+            - equal: [ all, << pipeline.parameters.modules >> ]
     jobs:
       - initialize
       - approve_subnet_plan:
