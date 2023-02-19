@@ -25,7 +25,6 @@ jobs:
             - run: 
                 name: terraform init and plan
                 command: |
-                  aws --version
                   export TF_VAR_env=$ENV
                   echo $ENV
                   echo $MODULE
