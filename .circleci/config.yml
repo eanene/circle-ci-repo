@@ -69,13 +69,16 @@ jobs:
          - checkout
          - run: echo "s3 example!!"
   deploy_all:
+      <<: *vpc
+      <<: *subnet
+      <<: *s3
+
       docker:
         - image: hashicorp/terraform
       working_directory: ~/circle-ci-repo 
       steps:
-        - <<: *vpc
-        - <<: *subnet
-        - <<: *s3
+          - checkout
+
         
       
 
