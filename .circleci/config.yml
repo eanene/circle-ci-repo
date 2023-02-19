@@ -59,17 +59,15 @@ jobs:
       working_directory: ~/circle-ci-repo 
       steps:
          - checkout
-         - run: echo "example!!"
-    #         - when:
-    #             condition:
-    #               equal: [ subnet, << parameters.modules >> ]
-      #       - attach_workspace:
-      #            at: ~/tf-class-repo
-    #         - run: 
-    #             name: terraform apply
-    #             command: |
-    #               cd environment/$MODULE
-    #               terraform init && terraform apply -auto-approve
+         - run: echo "subnet example!!"
+  
+  s3_apply:
+      docker:
+        - image: hashicorp/terraform
+      working_directory: ~/circle-ci-repo 
+      steps:
+         - checkout
+         - run: echo "s3 example!!"
 
 # Orchestrate our job run sequence
 workflows:
@@ -104,6 +102,29 @@ workflows:
       - subnet_apply:
           requires:
             - approve_subnet_plan
+  
+  all_modules_workflow:
+    when:
+      condition:
+          equal: [ all, << pipeline.parameters.modules >> ]
+
+    jobs:
+      - initialize
+      - vpc_apply:
+          requires:
+            - initialize
+      - subnet_apply:
+          requires:
+            - initialize
+      - s3_apply:
+          requires:
+            - initialize
+      - deploy:
+          requires:
+            - vpc_apply
+            - subnet_apply
+            - s3
+
             
             
             
