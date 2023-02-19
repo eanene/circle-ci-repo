@@ -137,7 +137,7 @@ workflows:
           requires:
             - vpc_apply
             - subnet_apply
-            - s3
+            - s3_apply
 
             
             
