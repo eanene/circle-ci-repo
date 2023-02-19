@@ -60,14 +60,10 @@ jobs:
   subnet_apply:
       docker:
         - image: hashicorp/terraform
-      working_directory: ~/circle-ci-repo
+      working_directory: ~/circle-ci-repo 
       steps:
-        - when:
-          condition:
-            equal: [ subnet, << pipeline.parameters.modules >> ]
-          steps:
-             - checkout
-             - run: echo "example!!"
+         - checkout
+         - run: echo "example!!"
     #         - when:
     #             condition:
     #               equal: [ subnet, << parameters.modules >> ]
