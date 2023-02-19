@@ -28,8 +28,8 @@ jobs:
             - run: 
                 name: terraform init and plan
                 command: |
-                  export TF_VAR_env=<< pipeline.parameters.dev >>
-                  echo << pipeline.parameters.dev >>
+                  export TF_VAR_env=<< pipeline.parameters.env >>
+                  echo << pipeline.parameters.env >>
                   echo << pipeline.parameters.modules >>
                   cd environment/<< pipeline.parameters.modules >>
                   terraform init -reconfigure -backend-config=backend/<< pipeline.parameters.env >>.conf
