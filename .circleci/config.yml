@@ -17,28 +17,25 @@ jobs:
     docker:
       - image: hashicorp/terraform
     working_directory: ~/circle-ci-repo
-    steps:
-      - when:
-          condition:
-            equal: [ vpc, << pipeline.parameters.modules >> ]
-          steps:      
-            - checkout
-            - run: 
-                name: terraform init and plan
-                command: |
-                  export TF_VAR_env=<< pipeline.parameters.env >>
-                  echo << pipeline.parameters.env >>
-                  echo << pipeline.parameters.modules >>
-                  cd environment/<< pipeline.parameters.modules >>
-                  terraform init -reconfigure -backend-config=backend/<< pipeline.parameters.env >>.conf
-                  terraform plan -var env=$ENV -out=<< pipeline.parameters.modules >>.tfplan
-                  pwd && ls -al
+    
+    steps:      
+      - checkout
+      - run: 
+          name: terraform init and plan
+          command: |
+            export TF_VAR_env=<< pipeline.parameters.env >>
+            echo << pipeline.parameters.env >>
+            echo << pipeline.parameters.modules >>
+            cd environment/<< pipeline.parameters.modules >>
+            terraform init -reconfigure -backend-config=backend/<< pipeline.parameters.env >>.conf
+            terraform plan -var env=$ENV -out=<< pipeline.parameters.modules >>.tfplan
+            pwd && ls -al
     #       - store_artifacts:
     #             path: ~/circle-ci-repo/environment/vpc/vpc.tfplan
     #             destination: artifact-file
-            - persist_to_workspace:
-                root: ~/circle-ci-repo
-                paths: environment/<< pipeline.parameters.modules >>/<< pipeline.parameters.modules >>.tfplan
+      - persist_to_workspace:
+          root: ~/circle-ci-repo
+          paths: environment/<< pipeline.parameters.modules >>/<< pipeline.parameters.modules >>.tfplan
 
   vpc_apply:
     docker:
@@ -106,4 +103,4 @@ workflows:
             
             
             
-  
+   
