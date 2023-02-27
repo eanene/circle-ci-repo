@@ -131,6 +131,9 @@ workflows:
           requires:
             - initialize
       - s3_apply:
+          when:
+            condition:
+                equal: [ s3, << pipeline.parameters.modules >> ]
           requires:
             - initialize
       - approve_all:  # when you figure out how to run only all modules, remove this step and use requires below
