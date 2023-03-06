@@ -20,7 +20,7 @@ jobs:
           # if: github.event_name == 'pull_request'
         uses: jbergknoff/github-action-wait-for-terraform-plan-approval@v1
         with:
-          command: 'apply'
+          command: 'submit'
   test3:
     runs-on: ubuntu-latest
     needs: test2
