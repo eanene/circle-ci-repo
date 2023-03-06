@@ -1,0 +1,10 @@
+name: Dev Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echoing
+        run: |
+          echo "hello"
+          echo "hello world"
