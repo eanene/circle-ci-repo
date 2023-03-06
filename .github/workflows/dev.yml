@@ -8,3 +8,12 @@ jobs:
         run: |
           echo "hello"
           echo "hello world"
+
+  test2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: secong_echoinh
+        run: |
+          echo "second hello"
+          aws --version
+
