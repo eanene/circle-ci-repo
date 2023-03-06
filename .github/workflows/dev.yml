@@ -1,34 +1,34 @@
-name: Dev Workflow
-on: push
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: echoing
-        run: |
-          echo "hello"
-          echo "hello world"
+# name: Dev Workflow
+# on: push
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: echoing
+#         run: |
+#           echo "hello"
+#           echo "hello world"
 
-  test2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: secong_echoinh
-        run: |
-          echo "second hello"
-          aws --version
-      - name: Wait for user approval
-          # if: github.event_name == 'pull_request'
-        uses: OctoKatherine/wait-for-pull-request-comment@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          approval-keywords: 'apply'
-  test3:
-    runs-on: ubuntu-latest
-    needs: test2
-    steps:
-      - name: secong_echoinh
-        run: |
-          echo "second hello"
-          terraform -v 
+#   test2:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: secong_echoinh
+#         run: |
+#           echo "second hello"
+#           aws --version
+#       - name: Wait for user approval
+#           # if: github.event_name == 'pull_request'
+#         uses: OctoKatherine/wait-for-pull-request-comment@v1
+#         with:
+#           plan_contents: ${{steps.plan.outputs.stdout}}
+#           approval-keywords: 'apply'
+#   test3:
+#     runs-on: ubuntu-latest
+#     needs: test2
+#     steps:
+#       - name: secong_echoinh
+#         run: |
+#           echo "second hello"
+#           terraform -v 
     
 
