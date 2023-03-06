@@ -18,10 +18,10 @@ jobs:
           aws --version
       - name: Wait for user approval
           # if: github.event_name == 'pull_request'
-        uses: jbergknoff/github-action-wait-for-terraform-plan-approval@v1
+        uses: OctoKatherine/wait-for-pull-request-comment@v1
         with:
-          command: submit
-          plan_contents: Hello, world!
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          approval-keywords: 'apply'
   test3:
     runs-on: ubuntu-latest
     needs: test2
